@@ -87,7 +87,6 @@ button {
 
 </div>
 
-<!-- オーバーレイ -->
 <div id="overlay" class="overlay hidden">
   <div class="big">PRINTING...</div>
 </div>
@@ -106,7 +105,8 @@ async function sendTicket() {
     return;
   }
 
-  const ticketId = Date.now().toString();
+  // 🔥 ここが修正ポイント
+  const ticketId = Date.now().toString() + "-" + Math.random().toString(36).slice(2, 8);
 
   const data = {
     ticketId,
@@ -116,12 +116,10 @@ async function sendTicket() {
     createdAt: new Date().toISOString()
   };
 
-  // 🔥 演出開始
   const overlay = document.getElementById("overlay");
   overlay.classList.remove("hidden");
 
   try {
-
     const res = await fetch(GAS_URL, {
       method: "POST",
       headers: {
@@ -130,16 +128,14 @@ async function sendTicket() {
       body: JSON.stringify(data)
     });
 
-    await res.text(); // ←ここ重要（止まり防止）
+    await res.text();
 
   } catch (e) {
     console.log("GAS error:", e);
   }
 
-  // 🔥 必ずここに来る（止まらない）
   overlay.classList.add("hidden");
 
-  // URL生成（100%確実）
   const base = window.location.origin + window.location.pathname.replace("index.html", "");
   const url = base + "ticket.html?id=" + ticketId;
 
