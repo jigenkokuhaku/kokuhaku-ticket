@@ -15,61 +15,35 @@
     height: 100vh;
   }
 
-  /* 🎫 チケット本体 */
   .ticket {
-    width: 340px;
+    width: 360px;
     padding: 28px;
     border-radius: 18px;
 
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
 
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255,255,255,0.2);
 
-    box-shadow:
-      0 10px 40px rgba(0, 0, 0, 0.6),
-      0 0 25px rgba(0, 200, 255, 0.15);
-
-    text-align: center;
     color: white;
+    text-align: center;
 
-    position: relative;
+    box-shadow: 0 0 30px rgba(0,200,255,0.15);
   }
-
-  /* 🎟 切符っぽい穴 */
-  .ticket::before,
-  .ticket::after {
-    content: "";
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    background: #000;
-    border-radius: 50%;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .ticket::before { left: -11px; }
-  .ticket::after { right: -11px; }
 
   h1 {
-    font-size: 22px;
     margin-bottom: 16px;
-    letter-spacing: 2px;
+    font-size: 22px;
   }
 
   input, textarea {
     width: 100%;
-    padding: 12px;
-    margin: 8px 0;
+    margin: 6px 0;
+    padding: 10px;
 
-    border-radius: 10px;
+    border-radius: 8px;
     border: none;
     outline: none;
-
-    background: rgba(255, 255, 255, 0.12);
-    color: white;
-    font-size: 14px;
   }
 
   textarea {
@@ -77,70 +51,66 @@
     resize: none;
   }
 
-  /* ボタン */
   button {
     width: 100%;
+    margin-top: 10px;
     padding: 12px;
-    margin-top: 14px;
 
     border: none;
     border-radius: 10px;
 
-    font-size: 16px;
+    background: linear-gradient(90deg,#00c6ff,#0072ff);
+    color: white;
     font-weight: bold;
 
     cursor: pointer;
-
-    background: linear-gradient(90deg, #00c6ff, #0072ff);
-    color: white;
-
-    transition: 0.2s;
   }
 
   button:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
 
-  /* 送信後演出 */
+  #shareBox {
+    margin-top: 16px;
+    font-size: 14px;
+  }
+
+  input.share {
+    width: 100%;
+    margin-top: 6px;
+  }
+
+  img {
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+
   .overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
 
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: rgba(0,0,0,0.8);
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-    color: white;
+    color:white;
+    text-align:center;
   }
 
-  .popup {
-    text-align: center;
-    animation: pop 0.4s ease;
-  }
+  .hidden { display:none; }
 
   .big {
-    font-size: 40px;
+    font-size: 34px;
     font-weight: bold;
-    letter-spacing: 2px;
   }
 
   .small {
+    opacity: 0.7;
     margin-top: 8px;
-    font-size: 14px;
-    opacity: 0.8;
-  }
-
-  .hidden {
-    display: none;
-  }
-
-  @keyframes pop {
-    0% { transform: scale(0.6); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
   }
 
 </style>
@@ -150,21 +120,22 @@
 
 <div class="ticket">
 
-  <h1>告白チケット</h1>
+  <h1>告白チケット発行</h1>
 
   <input id="sender" placeholder="あなたの名前">
-
   <textarea id="message" placeholder="告白を書いてください"></textarea>
 
-  <button onclick="sendTicket()">送信</button>
+  <button onclick="sendTicket()">チケット生成</button>
+
+  <div id="shareBox"></div>
 
 </div>
 
-<!-- 🎬 演出 -->
+<!-- 発行演出 -->
 <div id="overlay" class="overlay hidden">
-  <div class="popup">
-    <div class="big">GENERATED</div>
-    <div class="small">チケットが発行されました</div>
+  <div>
+    <div class="big">PRINTING...</div>
+    <div class="small">チケット生成中</div>
   </div>
 </div>
 
@@ -172,20 +143,22 @@
 
 async function sendTicket() {
 
-  const now = new Date().toISOString();
+  const ticketId = Date.now().toString();
+  const createdAt = new Date().toISOString();
 
   const data = {
-    ticketId: Date.now().toString(),
+    ticketId,
     sender: document.getElementById("sender").value,
     message: document.getElementById("message").value,
     status: "pending",
-    createdAt: now
+    createdAt
   };
 
+  // 演出表示
   document.getElementById("overlay").classList.remove("hidden");
 
   await fetch(
-    "https://script.google.com/macros/s/AKfycbxjpQKHPSwHYvebRxQVr_Lo2I_bGRdboJRNLCf40WbkzP2pQmnKgUxmBp9QIy4_CC-TaA/exec",
+    "YOUR_GAS_URL",
     {
       method: "POST",
       body: JSON.stringify(data)
@@ -193,9 +166,35 @@ async function sendTicket() {
   );
 
   setTimeout(() => {
+
     document.getElementById("overlay").classList.add("hidden");
+
+    const baseUrl =
+      location.href.replace("index.html", "ticket.html");
+
+    const url =
+      baseUrl + "?id=" + ticketId;
+
+    document.getElementById("shareBox").innerHTML = `
+      <p>🎫 チケットID：${ticketId}</p>
+
+      <p>🔗 共有URL</p>
+      <input class="share" id="shareUrl" value="${url}" readonly>
+      <button onclick="copyUrl()">コピー</button>
+
+      <p>📱 QRコード</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}">
+    `;
+
   }, 1500);
 
+}
+
+function copyUrl(){
+  const input = document.getElementById("shareUrl");
+  input.select();
+  document.execCommand("copy");
+  alert("コピーしたよ");
 }
 
 </script>
