@@ -1,56 +1,111 @@
-<!DOCTYPE html>
-<html>
+<style>
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+  }
 
-<head>
-  <meta charset="UTF-8">
-  <title>告白チケット</title>
-</head>
+  /* 🎫 チケット本体 */
+  .ticket {
+    width: 340px;
+    padding: 28px;
+    border-radius: 18px;
 
-<body>
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
 
-  <h1>告白チケット</h1>
+    border: 1px solid rgba(255, 255, 255, 0.2);
 
-  <input
-    id="sender"
-    placeholder="あなたの名前">
+    box-shadow:
+      0 10px 40px rgba(0, 0, 0, 0.6),
+      0 0 30px rgba(0, 255, 255, 0.15);
 
-  <br><br>
+    text-align: center;
 
-  <textarea
-    id="message"
-    placeholder="告白を書いて"></textarea>
+    position: relative;
+  }
 
-  <br><br>
+  /* ✂ チケットっぽい切り込み風 */
+  .ticket::before,
+  .ticket::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #000;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
-  <button onclick="sendTicket()">
-    送信
-  </button>
+  .ticket::before {
+    left: -10px;
+  }
 
-  <script>
+  .ticket::after {
+    right: -10px;
+  }
 
-    async function sendTicket() {
+  h1 {
+    font-size: 22px;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
 
-      const data = {
-        ticketId: Date.now().toString(),
-        sender:
-          document.getElementById("sender").value,
-        message:
-          document.getElementById("message").value
-      };
+  input,
+  textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
 
-      await fetch(
-        "https://script.google.com/macros/s/AKfycbxjpQKHPSwHYvebRxQVr_Lo2I_bGRdboJRNLCf40WbkzP2pQmnKgUxmBp9QIy4_CC-TaA/exec",
-        {
-          method: "POST",
-          body: JSON.stringify(data)
-        }
-      );
+    border-radius: 10px;
+    border: none;
 
-      alert("送信しました！");
-    }
+    outline: none;
 
-  </script>
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
 
-</body>
+    font-size: 14px;
+  }
 
-</html>
+  textarea {
+    height: 100px;
+    resize: none;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 16px;
+    cursor: pointer;
+
+    transition: 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.03);
+  }
+
+  /* 送信ボタン */
+  button {
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    color: white;
+    font-weight: bold;
+  }
+
+  /* ラベル的余白 */
+  h1 {
+    opacity: 0.9;
+  }
+</style>
