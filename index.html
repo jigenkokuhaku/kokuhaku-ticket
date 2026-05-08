@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>告白チケット</title>
+</head>
+
+<body>
+
+  <h1>告白チケット</h1>
+
+  <input
+    id="sender"
+    placeholder="あなたの名前">
+
+  <br><br>
+
+  <textarea
+    id="message"
+    placeholder="告白を書いて"></textarea>
+
+  <br><br>
+
+  <button onclick="sendTicket()">
+    送信
+  </button>
+
+  <script>
+
+    async function sendTicket() {
+
+      const data = {
+        ticketId: Date.now().toString(),
+        sender:
+          document.getElementById("sender").value,
+        message:
+          document.getElementById("message").value
+      };
+
+      await fetch(
+        "https://script.google.com/macros/s/AKfycbxjpQKHPSwHYvebRxQVr_Lo2I_bGRdboJRNLCf40WbkzP2pQmnKgUxmBp9QIy4_CC-TaA/exec",
+        {
+          method: "POST",
+          body: JSON.stringify(data)
+        }
+      );
+
+      alert("送信しました！");
+    }
+
+  </script>
+
+</body>
+
+</html>
