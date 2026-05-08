@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>告白チケット</title>
+
+  <style>
+
+    body {
+      font-family: sans-serif;
+      background: #f6f1eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .ticket {
+      background: #fff8ee;
+      width: 320px;
+      padding: 24px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    .message {
+      margin: 24px 0;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      margin: 6px;
+      font-size: 16px;
+    }
+
+    .yes {
+      background: #a9d8a9;
+    }
+
+    .no {
+      background: #ddd;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="ticket">
+
+    <h1>特別告白券</h1>
+
+    <div id="message" class="message">
+      読み込み中...
+    </div>
+
+    <button class="yes">
+      受け入れる
+    </button>
+
+    <button class="no">
+      辞退する
+    </button>
+
+  </div>
+
+  <script>
+
+    const params =
+      new URLSearchParams(location.search);
+
+    const ticketId =
+      params.get("id");
+
+    document.getElementById("message")
+      .innerText =
+      "あなたへの特別なメッセージ\n\nTicket ID: " + ticketId;
+
+  </script>
+
+</body>
+
+</html>
