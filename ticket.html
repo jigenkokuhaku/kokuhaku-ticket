@@ -62,7 +62,6 @@
     background: #ddd;
   }
 
-  /* 演出 */
   .overlay {
     position: fixed;
     top: 0;
@@ -100,61 +99,70 @@
     0% { transform: scale(0.6); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }
   }
-
 </style>
 </head>
 
 <body>
 
-  <div class="ticket">
+<div class="ticket">
 
-    <h1>次元告白チケット</h1>
+  <h1>次元告白チケット</h1>
 
-    <div id="timer"></div>
+  <div id="timer"></div>
 
-    <div id="message" class="message">
-      読み込み中...
-    </div>
-
-    <button class="yes" onclick="acceptTicket()">
-      受け入れる
-    </button>
-
-    <button class="no" onclick="declineTicket()">
-      辞退する
-    </button>
-
+  <div id="message" class="message">
+    読み込み中...
   </div>
 
-  <!-- 演出 -->
-  <div id="overlay" class="overlay hidden">
-    <div class="popup">
-      <div class="big-text" id="resultText">ACCEPTED</div>
-      <div class="small-text">想いを受け取りました</div>
-    </div>
+  <button class="yes" onclick="acceptTicket()">
+    受け入れる
+  </button>
+
+  <button class="no" onclick="declineTicket()">
+    辞退する
+  </button>
+
+</div>
+
+<div id="overlay" class="overlay hidden">
+  <div class="popup">
+    <div class="big-text" id="resultText">ACCEPTED</div>
+    <div class="small-text">想いを受け取りました</div>
   </div>
+</div>
 
 <script>
+
+const GAS_URL = "https://script.google.com/macros/s/AKfycbyAucuaQ-jclQmju5wzjUSXbH2aJs_TTDgk-d02H40CBi2WvmLPE1tNK3kdJMwXFIsirQ/exec";
 
 const params = new URLSearchParams(location.search);
 const ticketId = params.get("id");
 
 /* -----------------------
-   データ読み込み
+   データ読み込み（修正版）
 ----------------------- */
 async function loadTicket() {
 
-  const res = await fetch(
-    "https://script.google.com/macros/s/AKfycbxjpQKHPSwHYvebRxQVr_Lo2I_bGRdboJRNLCf40WbkzP2pQmnKgUxmBp9QIy4_CC-TaA/exec?id=" + ticketId
-  );
+  if (!ticketId) {
+    document.getElementById("message").innerText = "IDがありません";
+    return;
+  }
 
+  const res = await fetch(GAS_URL + "?id=" + ticketId);
   const data = await res.json();
-  document.getElementById("message").innerText = data.message;
 
+  console.log(data);
+
+  if (!data.message) {
+    document.getElementById("message").innerText = "読み込み失敗";
+    return;
+  }
+
+  document.getElementById("message").innerText = data.message;
 }
 
 /* -----------------------
-   24時間カウントダウン
+   24時間カウントダウン（そのまま）
 ----------------------- */
 const deadline = new Date().getTime() + 24 * 60 * 60 * 1000;
 
@@ -179,47 +187,45 @@ setInterval(updateTimer, 1000);
 updateTimer();
 
 /* -----------------------
-   受諾演出
+   受諾
 ----------------------- */
 async function acceptTicket() {
 
   showOverlay("ACCEPTED", "想いを受け取りました");
 
-  await fetch(
-    "https://script.google.com/macros/s/AKfycbxjpQKHPSwHYvebRxQVr_Lo2I_bGRdboJRNLCf40WbkzP2pQmnKgUxmBp9QIy4_CC-TaA/exec",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        ticketId: ticketId,
-        status: "accepted"
-      })
-    }
-  );
-
+  await fetch(GAS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      ticketId,
+      status: "accepted"
+    })
+  });
 }
 
 /* -----------------------
-   辞退演出
+   辞退
 ----------------------- */
 async function declineTicket() {
 
   showOverlay("DECLINED", "この想いは保留されました");
 
-  await fetch(
-    "https://script.google.com/macros/s/AKfycbxjpQKHPSwHYvebRxQVr_Lo2I_bGRdboJRNLCf40WbkzP2pQmnKgUxmBp9QIy4_CC-TaA/exec",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        ticketId: ticketId,
-        status: "declined"
-      })
-    }
-  );
-
+  await fetch(GAS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      ticketId,
+      status: "declined"
+    })
+  });
 }
 
 /* -----------------------
-   共通演出
+   演出
 ----------------------- */
 function showOverlay(title, subtitle) {
 
@@ -232,7 +238,6 @@ function showOverlay(title, subtitle) {
   setTimeout(() => {
     overlay.classList.add("hidden");
   }, 2000);
-
 }
 
 loadTicket();
