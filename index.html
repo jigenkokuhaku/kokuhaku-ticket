@@ -92,7 +92,6 @@
     opacity: 0.7;
     margin-top: 8px;
   }
-
 </style>
 </head>
 
@@ -111,6 +110,7 @@
 
 </div>
 
+<!-- 発行演出 -->
 <div id="overlay" class="overlay hidden">
   <div style="text-align:center;">
     <div class="big">PRINTING...</div>
@@ -123,20 +123,22 @@
 async function sendTicket() {
 
   const ticketId = Date.now().toString();
-  const createdAt = new Date().toISOString();
 
   const data = {
     ticketId,
     sender: document.getElementById("sender").value,
     message: document.getElementById("message").value,
     status: "pending",
-    createdAt
+    createdAt: new Date().toISOString()
   };
 
   document.getElementById("overlay").classList.remove("hidden");
 
   await fetch("YOUR_GAS_URL", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify(data)
   });
 
@@ -144,12 +146,11 @@ async function sendTicket() {
 
     document.getElementById("overlay").classList.add("hidden");
 
-    // 🔥 ここが修正版（絶対に崩れないURL生成）
-    const base =
-      window.location.origin + "/kokuhaku-ticket/";
+    // 🚀 安定版URL生成（どの環境でも壊れない）
+    const path = window.location.pathname;
+    const base = window.location.origin + path.replace("index.html", "");
 
-    const url =
-      base + "ticket.html?id=" + ticketId;
+    const url = base + "ticket.html?id=" + ticketId;
 
     document.getElementById("shareBox").innerHTML = `
       <p>🎫 チケットID：${ticketId}</p>
@@ -162,7 +163,7 @@ async function sendTicket() {
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}">
     `;
 
-  }, 1500);
+  }, 1200);
 
 }
 
