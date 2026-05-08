@@ -13,34 +13,28 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    color: white;
   }
 
   .ticket {
     width: 360px;
     padding: 28px;
     border-radius: 18px;
-
     background: rgba(255,255,255,0.08);
     backdrop-filter: blur(10px);
-
     border: 1px solid rgba(255,255,255,0.2);
-
-    color: white;
     text-align: center;
-
-    box-shadow: 0 0 30px rgba(0,200,255,0.15);
   }
 
   h1 {
-    margin-bottom: 16px;
     font-size: 22px;
+    margin-bottom: 16px;
   }
 
   input, textarea {
     width: 100%;
-    margin: 6px 0;
     padding: 10px;
-
+    margin: 6px 0;
     border-radius: 8px;
     border: none;
     outline: none;
@@ -53,21 +47,14 @@
 
   button {
     width: 100%;
-    margin-top: 10px;
     padding: 12px;
-
+    margin-top: 10px;
     border: none;
     border-radius: 10px;
-
     background: linear-gradient(90deg,#00c6ff,#0072ff);
     color: white;
     font-weight: bold;
-
     cursor: pointer;
-  }
-
-  button:hover {
-    transform: scale(1.02);
   }
 
   #shareBox {
@@ -82,29 +69,22 @@
 
   img {
     margin-top: 10px;
-    border-radius: 10px;
   }
 
   .overlay {
     position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-
+    top:0;left:0;
+    width:100%;height:100%;
     background: rgba(0,0,0,0.8);
     display:flex;
     justify-content:center;
     align-items:center;
-
-    color:white;
-    text-align:center;
   }
 
   .hidden { display:none; }
 
   .big {
-    font-size: 34px;
+    font-size: 32px;
     font-weight: bold;
   }
 
@@ -125,15 +105,14 @@
   <input id="sender" placeholder="あなたの名前">
   <textarea id="message" placeholder="告白を書いてください"></textarea>
 
-  <button onclick="sendTicket()">チケット生成</button>
+  <button onclick="sendTicket()">生成</button>
 
   <div id="shareBox"></div>
 
 </div>
 
-<!-- 発行演出 -->
 <div id="overlay" class="overlay hidden">
-  <div>
+  <div style="text-align:center;">
     <div class="big">PRINTING...</div>
     <div class="small">チケット生成中</div>
   </div>
@@ -154,26 +133,23 @@ async function sendTicket() {
     createdAt
   };
 
-  // 演出表示
   document.getElementById("overlay").classList.remove("hidden");
 
-  await fetch(
-    "YOUR_GAS_URL",
-    {
-      method: "POST",
-      body: JSON.stringify(data)
-    }
-  );
+  await fetch("YOUR_GAS_URL", {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
 
   setTimeout(() => {
 
     document.getElementById("overlay").classList.add("hidden");
 
-    const baseUrl =
-      location.href.replace("index.html", "ticket.html");
+    // 🔥 ここが修正版（絶対に崩れないURL生成）
+    const base =
+      window.location.origin + "/kokuhaku-ticket/";
 
     const url =
-      baseUrl + "?id=" + ticketId;
+      base + "ticket.html?id=" + ticketId;
 
     document.getElementById("shareBox").innerHTML = `
       <p>🎫 チケットID：${ticketId}</p>
