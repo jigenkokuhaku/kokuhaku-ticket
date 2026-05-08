@@ -6,81 +6,120 @@
 
 <style>
 body {
-  margin:0;
-  font-family:sans-serif;
-  background: radial-gradient(circle at top,#1a1a2e,#000);
+  margin: 0;
+  font-family: sans-serif;
+  background: radial-gradient(circle at top, #1a1a2e, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+}
+
+.ticket {
+  width: 360px;
+  padding: 28px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 8px;
+  border: none;
+}
+
+textarea { height: 100px; }
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #00c6ff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#shareBox {
+  margin-top: 16px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* 🔥 ボタン死ぬ問題対策 */
+.overlay.hidden {
+  display: none !important;
+}
+
+.overlay {
+  position: fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background: rgba(0,0,0,0.8);
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
-  color:white;
 }
 
-.box {
-  width:360px;
-  padding:28px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.08);
-  text-align:center;
+.big {
+  font-size: 32px;
 }
-
-input,textarea {
-  width:100%;
-  margin:6px 0;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-}
-
-textarea { height:100px; }
-
-button {
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-  background:#00c6ff;
-  color:white;
-  font-weight:bold;
-}
-
-#shareBox { margin-top:15px; }
-
-img { margin-top:10px; }
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="ticket">
 
 <h2>告白チケット発行</h2>
 
 <input id="sender" placeholder="名前">
 <textarea id="message" placeholder="告白"></textarea>
 
-<button onclick="send()">発行</button>
+<button onclick="sendTicket()">発行</button>
 
 <div id="shareBox"></div>
 
+</div>
+
+<div id="overlay" class="overlay hidden">
+  <div class="big">PRINTING...</div>
 </div>
 
 <script>
 
 const GAS_URL = "https://script.google.com/macros/s/AKfycbyAucuaQ-jclQmju5wzjUSXbH2aJs_TTDgk-d02H40CBi2WvmLPE1tNK3kdJMwXFIsirQ/exec";
 
-async function send() {
+async function sendTicket() {
+
+  const senderVal = document.getElementById("sender").value;
+  const messageVal = document.getElementById("message").value;
+
+  if (!senderVal || !messageVal) {
+    alert("入力してね");
+    return;
+  }
 
   const ticketId = Date.now().toString();
 
   const data = {
     ticketId,
-    sender: sender.value,
-    message: message.value,
+    sender: senderVal,
+    message: messageVal,
     status: "pending",
     createdAt: new Date().toISOString()
   };
+
+  document.getElementById("overlay").classList.remove("hidden");
 
   await fetch(GAS_URL, {
     method: "POST",
@@ -90,18 +129,20 @@ async function send() {
     body: JSON.stringify(data)
   });
 
-  const base = window.location.origin + window.location.pathname.replace("index.html","");
+  setTimeout(() => {
 
-  const url = base + "ticket.html?id=" + ticketId;
+    document.getElementById("overlay").classList.add("hidden");
 
-  document.getElementById("shareBox").innerHTML = `
-    <p>🎫 ID: ${ticketId}</p>
+    const base = window.location.origin + window.location.pathname.replace("index.html","");
 
-    <input id="share" value="${url}" readonly>
-    <button onclick="copy()">コピー</button>
+    const url = base + "ticket.html?id=" + ticketId;
 
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}">
-  `;
+    document.getElementById("shareBox").innerHTML = `
+      <p>🎫 ID: ${ticketId}</p>
+      <input id="share" value="${url}" readonly>
+      <button onclick="copy()">コピー</button>
+    `;
+  }, 1200);
 }
 
 function copy(){
