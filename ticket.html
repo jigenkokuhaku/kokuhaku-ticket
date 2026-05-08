@@ -74,19 +74,30 @@
 
   </div>
 
-  <script>
+<script>
 
-    const params =
-      new URLSearchParams(location.search);
+  const params =
+    new URLSearchParams(location.search);
 
-    const ticketId =
-      params.get("id");
+  const ticketId =
+    params.get("id");
+
+  async function loadTicket() {
+
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbxjpQKHPSwHYvebRxQVr_Lo2I_bGRdboJRNLCf40WbkzP2pQmnKgUxmBp9QIy4_CC-TaA/exec?id=" + ticketId
+    );
+
+    const data = await response.json();
 
     document.getElementById("message")
-      .innerText =
-      "あなたへの特別なメッセージ\n\nTicket ID: " + ticketId;
+      .innerText = data.message;
 
-  </script>
+  }
+
+  loadTicket();
+
+</script>
 
 </body>
 
