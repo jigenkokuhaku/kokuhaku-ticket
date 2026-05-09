@@ -125,7 +125,7 @@ async function sendTicket() {
     const res = await fetch(GAS_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "text/plain"
       },
       body: JSON.stringify(data)
     });
