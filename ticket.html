@@ -164,7 +164,7 @@ async function loadTicket() {
 /* -----------------------
    24時間カウントダウン（そのまま）
 ----------------------- */
-const deadline = new Date().getTime() + 24 * 60 * 60 * 1000;
+const deadline = new Date().setTime(parseInt(ticketId.split("-")[0])) + 24 * 60 * 60 * 1000;
 
 function updateTimer() {
   const now = new Date().getTime();
