@@ -196,7 +196,7 @@ async function acceptTicket() {
   await fetch(GAS_URL, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "text/plain"
     },
     body: JSON.stringify({
       ticketId,
@@ -215,7 +215,7 @@ async function declineTicket() {
   await fetch(GAS_URL, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "text/plain"
     },
     body: JSON.stringify({
       ticketId,
