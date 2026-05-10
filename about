@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>次元告白チケット | About</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:
+    radial-gradient(circle at top,#1a1a2e,#000);
+  color:white;
+  line-height:1.8;
+}
+
+.container{
+  width:100%;
+  max-width:900px;
+  margin:auto;
+  padding:24px;
+}
+
+.hero{
+  min-height:70vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.hero-box{
+  width:100%;
+  max-width:720px;
+  padding:40px 28px;
+  border-radius:24px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(12px);
+  box-shadow:0 0 40px rgba(0,255,255,0.08);
+}
+
+h1{
+  font-size:42px;
+  margin-bottom:12px;
+  letter-spacing:2px;
+}
+
+.subtitle{
+  font-size:18px;
+  opacity:0.85;
+}
+
+.section{
+  margin-top:42px;
+  padding:28px;
+  border-radius:22px;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(10px);
+}
+
+.section h2{
+  margin-top:0;
+  font-size:28px;
+  margin-bottom:16px;
+}
+
+.step{
+  margin-bottom:20px;
+  padding:18px;
+  border-radius:16px;
+  background:rgba(255,255,255,0.05);
+}
+
+.step-title{
+  font-weight:bold;
+  margin-bottom:8px;
+  font-size:18px;
+}
+
+.faq{
+  margin-bottom:16px;
+  padding:16px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.05);
+}
+
+.footer{
+  text-align:center;
+  margin:48px 0 20px;
+  opacity:0.7;
+  font-size:14px;
+}
+
+.button-area{
+  margin-top:26px;
+}
+
+.button{
+  display:inline-block;
+  padding:14px 24px;
+  border-radius:14px;
+  text-decoration:none;
+  background:#00c6ff;
+  color:white;
+  font-weight:bold;
+  transition:0.2s;
+}
+
+.button:hover{
+  transform:scale(1.05);
+}
+
+ul{
+  padding-left:20px;
+}
+
+@media(max-width:600px){
+
+  h1{
+    font-size:32px;
+  }
+
+  .hero-box{
+    padding:28px 20px;
+  }
+
+  .section{
+    padding:22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <section class="hero">
+
+    <div class="hero-box">
+
+      <h1>次元告白チケット</h1>
+
+      <div class="subtitle">
+        言葉にできなかった想いを、
+        一枚のチケットに。
+      </div>
+
+      <div class="button-area">
+        <a class="button" href="index.html">
+          チケットを発行する
+        </a>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="section">
+
+    <h2>次元告白チケットとは？</h2>
+
+    <p>
+      次元告白チケットは、
+      大切な相手へ想いを届けるための
+      Webチケットサービスです。
+    </p>
+
+    <p>
+      URLを送るだけで、
+      相手はメッセージを受け取り、
+      ACCEPT / DECLINE を選択できます。
+    </p>
+
+    <ul>
+      <li>24時間限定チケット</li>
+      <li>回答は1回のみ</li>
+      <li>ステータス確認可能</li>
+      <li>スマホ対応</li>
+    </ul>
+
+  </section>
+
+  <section class="section">
+
+    <h2>使い方</h2>
+
+    <div class="step">
+      <div class="step-title">
+        STEP 1
+      </div>
+
+      名前・相手の名前・メッセージを入力して
+      チケットを発行します。
+    </div>
+
+    <div class="step">
+      <div class="step-title">
+        STEP 2
+      </div>
+
+      発行されたURLを、
+      LINE・DM・SNSなどで送ります。
+    </div>
+
+    <div class="step">
+      <div class="step-title">
+        STEP 3
+      </div>
+
+      相手がチケットを開き、
+      回答を選択します。
+    </div>
+
+    <div class="step">
+      <div class="step-title">
+        STEP 4
+      </div>
+
+      ステータス確認ページで、
+      現在の状態を確認できます。
+    </div>
+
+  </section>
+
+  <section class="section">
+
+    <h2>FAQ</h2>
+
+    <div class="faq">
+      <strong>Q. 回答は取り消せますか？</strong><br>
+      一度回答すると変更できません。
+    </div>
+
+    <div class="faq">
+      <strong>Q. 期限切れ後はどうなりますか？</strong><br>
+      24時間経過後、自動的に期限切れになります。
+    </div>
+
+    <div class="faq">
+      <strong>Q. 匿名で送れますか？</strong><br>
+      現在検討中です。
+    </div>
+
+  </section>
+
+  <section class="section">
+
+    <h2>利用について</h2>
+
+    <p>
+      誹謗中傷・嫌がらせ・迷惑行為などを目的とした利用は禁止です。
+    </p>
+
+    <p>
+      公開SNSへ無差別にURLを貼る行為は避けてください。
+    </p>
+
+  </section>
+
+  <section class="section">
+
+    <h2>Creator</h2>
+
+    <p>
+      Created by Tomochi
+    </p>
+
+    <p>
+      想いを、少しだけ言葉にしやすくするために。
+    </p>
+
+  </section>
+
+  <div class="footer">
+    © 2026 次元告白チケット
+  </div>
+
+</div>
+
+</body>
+</html>
