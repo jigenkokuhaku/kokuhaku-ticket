@@ -137,13 +137,19 @@ async function loadStatus(){
       data.message;
 
     // 日付
-    document.getElementById("createdAt").innerText =
-      "発行日時: " + data.createdAt;
+    const created =
+  new Date(data.createdAt).toLocaleString("ja-JP");
+
+     document.getElementById("createdAt").innerText =
+  "発行日時: " + created;
 
     if(data.answeredAt){
 
-  document.getElementById("answeredAt").innerText =
-    "回答日時: " + data.answeredAt;
+  const answered =
+  new Date(data.answeredAt).toLocaleString("ja-JP");
+
+     document.getElementById("answeredAt").innerText =
+  "回答日時: " + answered;
 
      }
 
