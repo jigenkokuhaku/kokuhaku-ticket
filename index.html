@@ -78,7 +78,10 @@ button {
 
 <h2>告白チケット発行</h2>
 
-<input id="sender" placeholder="名前">
+<input id="sender" placeholder="あなたの名前">
+
+<input id="receiver" placeholder="相手の名前">
+
 <textarea id="message" placeholder="告白"></textarea>
 
 <button onclick="sendTicket()">発行</button>
@@ -101,8 +104,9 @@ async function sendTicket() {
 
   const sender = document.getElementById("sender").value.trim();
   const message = document.getElementById("message").value.trim();
+  const receiver = document.getElementById("receiver").value.trim();
 
-  if (!sender || !message) {
+  if (!sender || !receiver || !message) {
     alert("名前とメッセージを入力してね");
     return;
   }
@@ -111,9 +115,10 @@ async function sendTicket() {
   const ticketId = Date.now().toString() + "-" + Math.random().toString(36).slice(2, 8);
 
   const data = {
-    ticketId,
-    sender,
-    message,
+   ticketId,
+   sender,
+   receiver,
+   message,
     status: "pending",
     createdAt: new Date().toISOString()
   };
