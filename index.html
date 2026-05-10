@@ -348,9 +348,9 @@ async function sendTicket() {
     value="${url}"
     readonly>
 
-  <button onclick="copyUrl()">
-    告白URLをコピー
-  </button>
+<button onclick="copyShareText()">
+  共有メッセージをコピー
+</button>
 
   </a>
 
@@ -376,16 +376,17 @@ async function sendTicket() {
 `;
 }
 
-function copyUrl(){
+function copyShareText(){
 
-  const input =
-    document.getElementById("shareUrl");
+  const text = `あなたに伝えたい想いがあります。
 
-  input.select();
+次元告白チケットが届いています💌
 
-  document.execCommand("copy");
+${document.getElementById("shareUrl").value}`;
 
-  alert("コピーしたよ");
+  navigator.clipboard.writeText(text);
+
+  alert("共有メッセージをコピーしたよ");
 }
 
 function copyCheckUrl(){
