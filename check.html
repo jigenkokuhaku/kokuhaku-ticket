@@ -89,6 +89,8 @@ h1{
 
   <div class="small" id="createdAt"></div>
 
+  <div class="small" id="answeredAt"></div>
+
 </div>
 
 <script>
@@ -137,6 +139,13 @@ async function loadStatus(){
     // 日付
     document.getElementById("createdAt").innerText =
       "発行日時: " + data.createdAt;
+
+    if(data.answeredAt){
+
+  document.getElementById("answeredAt").innerText =
+    "回答日時: " + data.answeredAt;
+
+     }
 
     // ステータス
     const statusEl =
