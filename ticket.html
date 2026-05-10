@@ -159,6 +159,8 @@ async function loadTicket() {
   }
 
   document.getElementById("message").innerText = data.message;
+  window.currentStatus = data.status;
+  
   if (
   data.status === "accepted" ||
   data.status === "declined"
@@ -176,6 +178,14 @@ const deadline = new Date().setTime(parseInt(ticketId.split("-")[0])) + 24 * 60 
 
 function updateTimer() {
   const now = new Date().getTime();
+  if(window.currentStatus &&
+   window.currentStatus !== "pending"){
+
+  document.getElementById("timer").innerText =
+    "✅ 回答済み";
+
+  return;
+}
   const diff = deadline - now;
 
   if (diff <= 0) {
