@@ -2,51 +2,72 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>告白チケット状態確認</title>
+<title>告白ステータス確認</title>
 
 <style>
 
 body{
   margin:0;
   font-family:sans-serif;
-  background: radial-gradient(circle at top,#1a1a2e,#000);
+  background:
+    radial-gradient(circle at top,#1a1a2e,#000);
+  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
   color:white;
 }
 
-.box{
-  width:340px;
+.card{
+  width:360px;
   padding:28px;
   border-radius:18px;
   background:rgba(255,255,255,0.08);
   backdrop-filter:blur(10px);
   text-align:center;
+  box-shadow:0 0 30px rgba(0,255,255,0.15);
 }
 
-.status{
-  font-size:28px;
+h1{
+  margin-top:0;
+  font-size:24px;
+}
+
+.names{
   margin-top:20px;
+  font-size:20px;
   font-weight:bold;
-}
-
-.pending{
-  color:#ffd166;
-}
-
-.accepted{
-  color:#80ed99;
-}
-
-.declined{
-  color:#ff6b6b;
 }
 
 .message{
   margin-top:20px;
-  opacity:0.8;
+  line-height:1.7;
+  font-size:18px;
+  white-space:pre-wrap;
+}
+
+.status{
+  margin-top:28px;
+  font-size:26px;
+  font-weight:bold;
+}
+
+.pending{
+  color:#ffd966;
+}
+
+.accepted{
+  color:#8cffb2;
+}
+
+.declined{
+  color:#ff9b9b;
+}
+
+.small{
+  margin-top:10px;
+  opacity:0.7;
+  font-size:13px;
 }
 
 </style>
@@ -54,15 +75,19 @@ body{
 
 <body>
 
-<div class="box">
+<div class="card">
 
-  <h2>告白チケット状態</h2>
+  <h1>告白ステータス</h1>
 
-  <div id="status" class="status">
+  <div class="names" id="names">
     読み込み中...
   </div>
 
-  <div id="message" class="message"></div>
+  <div class="message" id="message"></div>
+
+  <div class="status" id="status"></div>
+
+  <div class="small" id="createdAt"></div>
 
 </div>
 
@@ -76,48 +101,81 @@ const ticketId = params.get("id");
 
 async function loadStatus(){
 
-  const res = await fetch(
-    GAS_URL + "?id=" + ticketId
-  );
+  if(!ticketId){
 
-  const data = await res.json();
+    document.getElementById("names").innerText =
+      "チケットIDがありません";
 
-  const statusEl = document.getElementById("status");
-  const msgEl = document.getElementById("message");
-
-  if(data.status === "pending"){
-
-    statusEl.innerText = "返答待ち";
-    statusEl.className = "status pending";
-
-    msgEl.innerText =
-      "まだ返答されていません";
-
+    return;
   }
 
-  else if(data.status === "accepted"){
+  try{
 
-    statusEl.innerText = "ACCEPTED";
-    statusEl.className = "status accepted";
+    const res =
+      await fetch(GAS_URL + "?id=" + ticketId);
 
-    msgEl.innerText =
-      "想いは受け入れられました";
+    const data = await res.json();
 
-  }
+    console.log(data);
 
-  else if(data.status === "declined"){
+    if(data.error){
 
-    statusEl.innerText = "DECLINED";
-    statusEl.className = "status declined";
+      document.getElementById("names").innerText =
+        "チケットが見つかりません";
 
-    msgEl.innerText =
-      "今回は保留になりました";
+      return;
+    }
 
-  }
+    // 名前表示
+    document.getElementById("names").innerText =
+      `${data.sender} → ${data.receiver}`;
 
-  else{
+    // メッセージ表示
+    document.getElementById("message").innerText =
+      data.message;
 
-    statusEl.innerText = "NOT FOUND";
+    // 日付
+    document.getElementById("createdAt").innerText =
+      "発行日時: " + data.createdAt;
+
+    // ステータス
+    const statusEl =
+      document.getElementById("status");
+
+    if(data.status === "pending"){
+
+      statusEl.innerHTML =
+        "🟡 PENDING";
+
+      statusEl.className =
+        "status pending";
+
+    }
+    else if(data.status === "accepted"){
+
+      statusEl.innerHTML =
+        "🟢 ACCEPTED";
+
+      statusEl.className =
+        "status accepted";
+
+    }
+    else if(data.status === "declined"){
+
+      statusEl.innerHTML =
+        "🔴 DECLINED";
+
+      statusEl.className =
+        "status declined";
+
+    }
+
+  }catch(err){
+
+    console.log(err);
+
+    document.getElementById("names").innerText =
+      "読み込み失敗";
 
   }
 
