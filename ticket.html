@@ -159,6 +159,14 @@ async function loadTicket() {
   }
 
   document.getElementById("message").innerText = data.message;
+  if (
+  data.status === "accepted" ||
+  data.status === "declined"
+) {
+
+  disableButtons(data.status);
+
+}
 }
 
 /* -----------------------
@@ -240,6 +248,39 @@ function showOverlay(title, subtitle) {
   }, 2000);
 }
 
+/* -----------------------
+   ボタン無効化
+----------------------- */
+function disableButtons(status){
+
+  const yesBtn =
+    document.querySelector(".yes");
+
+  const noBtn =
+    document.querySelector(".no");
+
+  yesBtn.disabled = true;
+  noBtn.disabled = true;
+
+  yesBtn.style.opacity = 0.5;
+  noBtn.style.opacity = 0.5;
+
+  if(status === "accepted"){
+
+    yesBtn.innerText = "✓ ACCEPTED";
+    noBtn.style.display = "none";
+
+  }
+
+  if(status === "declined"){
+
+    noBtn.innerText = "✓ DECLINED";
+    yesBtn.style.display = "none";
+
+  }
+
+}
+  
 loadTicket();
 
 </script>
