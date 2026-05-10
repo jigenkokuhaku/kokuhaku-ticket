@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>告白チケット状態確認</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:sans-serif;
+  background: radial-gradient(circle at top,#1a1a2e,#000);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  color:white;
+}
+
+.box{
+  width:340px;
+  padding:28px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  text-align:center;
+}
+
+.status{
+  font-size:28px;
+  margin-top:20px;
+  font-weight:bold;
+}
+
+.pending{
+  color:#ffd166;
+}
+
+.accepted{
+  color:#80ed99;
+}
+
+.declined{
+  color:#ff6b6b;
+}
+
+.message{
+  margin-top:20px;
+  opacity:0.8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <h2>告白チケット状態</h2>
+
+  <div id="status" class="status">
+    読み込み中...
+  </div>
+
+  <div id="message" class="message"></div>
+
+</div>
+
+<script>
+
+const GAS_URL =
+"https://script.google.com/macros/s/AKfycbyAucuaQ-jclQmju5wzjUSXbH2aJs_TTDgk-d02H40CBi2WvmLPE1tNK3kdJMwXFIsirQ/exec";
+
+const params = new URLSearchParams(location.search);
+const ticketId = params.get("id");
+
+async function loadStatus(){
+
+  const res = await fetch(
+    GAS_URL + "?id=" + ticketId
+  );
+
+  const data = await res.json();
+
+  const statusEl = document.getElementById("status");
+  const msgEl = document.getElementById("message");
+
+  if(data.status === "pending"){
+
+    statusEl.innerText = "返答待ち";
+    statusEl.className = "status pending";
+
+    msgEl.innerText =
+      "まだ返答されていません";
+
+  }
+
+  else if(data.status === "accepted"){
+
+    statusEl.innerText = "ACCEPTED";
+    statusEl.className = "status accepted";
+
+    msgEl.innerText =
+      "想いは受け入れられました";
+
+  }
+
+  else if(data.status === "declined"){
+
+    statusEl.innerText = "DECLINED";
+    statusEl.className = "status declined";
+
+    msgEl.innerText =
+      "今回は保留になりました";
+
+  }
+
+  else{
+
+    statusEl.innerText = "NOT FOUND";
+
+  }
+
+}
+
+loadStatus();
+
+</script>
+
+</body>
+</html>
