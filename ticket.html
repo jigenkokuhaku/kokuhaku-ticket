@@ -161,16 +161,6 @@ async function loadTicket() {
   document.getElementById("message").innerText = data.message;
   window.currentStatus = data.status;
 
-  if(data.status !== "pending"){
-
-  document.querySelector(".yes").disabled = true;
-  document.querySelector(".no").disabled = true;
-
-  document.querySelector(".yes").style.opacity = 0.5;
-  document.querySelector(".no").style.opacity = 0.5;
-
-}
-  
   if (
   data.status === "accepted" ||
   data.status === "declined"
