@@ -381,11 +381,8 @@ ${url}</textarea>
 
 function copyShareText(){
 
-  const text = `あなたに伝えたい想いがあります。
-
-次元告白チケットが届いています💌
-
-${document.getElementById("shareUrl").value}`;
+  const text =
+    document.getElementById("shareUrl").value;
 
   navigator.clipboard.writeText(text);
 
