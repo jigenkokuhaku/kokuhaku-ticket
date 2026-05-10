@@ -110,6 +110,8 @@
 
   <div id="timer"></div>
 
+  <div id="meta"></div>
+
   <div id="message" class="message">
     読み込み中...
   </div>
@@ -158,6 +160,11 @@ async function loadTicket() {
     return;
   }
 
+  document.getElementById("meta").innerHTML = `
+  <div>From: ${data.sender}</div>
+  <div>To: ${data.receiver}</div>
+`;
+  
   document.getElementById("message").innerText = data.message;
   window.currentStatus = data.status;
 
