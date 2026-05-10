@@ -5,70 +5,197 @@
 <title>告白チケット発行</title>
 
 <style>
+
+*{
+  box-sizing:border-box;
+}
+
 body {
   margin: 0;
   font-family: sans-serif;
-  background: radial-gradient(circle at top, #1a1a2e, #000);
+  background:
+    radial-gradient(circle at top, #1a1a2e, #000);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   color: white;
+  padding: 20px;
 }
 
 .ticket {
-  width: 360px;
-  padding: 28px;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(10px);
-  text-align: center;
-}
 
-input, textarea {
   width: 100%;
-  padding: 10px;
-  margin: 6px 0;
-  border-radius: 8px;
-  border: none;
-  outline: none;
+  max-width: 420px;
+
+  padding: 30px;
+
+  border-radius: 24px;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 0 40px rgba(0,255,255,0.12);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
 }
 
-textarea { height: 100px; }
+h2{
+  text-align:center;
+  margin-top:0;
+  margin-bottom:24px;
+  font-size:28px;
+  letter-spacing:1px;
+}
+
+.label{
+  margin-top:14px;
+  margin-bottom:8px;
+  font-size:14px;
+  opacity:0.8;
+}
+
+input,
+textarea {
+
+  width:100%;
+
+  padding:14px;
+
+  border-radius:14px;
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  background:
+    rgba(255,255,255,0.06);
+
+  color:white;
+
+  outline:none;
+
+  font-size:15px;
+
+  transition:0.2s;
+}
+
+input:focus,
+textarea:focus{
+
+  border:
+    1px solid rgba(0,198,255,0.6);
+
+  box-shadow:
+    0 0 12px rgba(0,198,255,0.25);
+
+}
+
+textarea{
+  min-height:140px;
+  resize:none;
+}
 
 button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 10px;
-  background: #00c6ff;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+
+  width:100%;
+
+  padding:14px;
+
+  margin-top:18px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #00c6ff,
+      #0072ff
+    );
+
+  color:white;
+
+  font-size:16px;
+  font-weight:bold;
+
+  cursor:pointer;
+
+  transition:0.2s;
 }
 
-#shareBox {
-  margin-top: 16px;
+button:hover{
+  transform:translateY(-2px);
+  opacity:0.95;
+}
+
+#shareBox{
+  margin-top:24px;
+}
+
+#shareBox input{
+  margin-top:8px;
 }
 
 .overlay {
   position: fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  background: rgba(0,0,0,0.85);
+  inset:0;
+
+  background:
+    rgba(0,0,0,0.86);
+
   display:flex;
   justify-content:center;
   align-items:center;
-  z-index: 10;
+
+  z-index:999;
 }
 
-.hidden { display: none !important; }
-
-.big {
-  font-size: 32px;
-  font-weight: bold;
+.hidden{
+  display:none !important;
 }
+
+.big{
+
+  font-size:38px;
+
+  font-weight:bold;
+
+  letter-spacing:4px;
+
+  animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+
+  0%{
+    opacity:0.5;
+    transform:scale(0.98);
+  }
+
+  50%{
+    opacity:1;
+    transform:scale(1.03);
+  }
+
+  100%{
+    opacity:0.5;
+    transform:scale(0.98);
+  }
+}
+
+.small-note{
+  margin-top:12px;
+  font-size:12px;
+  opacity:0.6;
+  text-align:center;
+}
+
 </style>
 </head>
 
@@ -76,107 +203,182 @@ button {
 
 <div class="ticket">
 
-<h2>告白チケット発行</h2>
+<h2>💌 告白チケット発行</h2>
 
-<input id="sender" placeholder="あなたの名前">
+<div class="label">
+あなたの名前
+</div>
 
-<input id="receiver" placeholder="相手の名前">
+<input
+  id="sender"
+  placeholder="あなたの名前">
 
-<textarea id="message" placeholder="告白"></textarea>
+<div class="label">
+相手の名前
+</div>
 
-<button onclick="sendTicket()">発行</button>
+<input
+  id="receiver"
+  placeholder="相手の名前">
+
+<div class="label">
+メッセージ
+</div>
+
+<textarea
+  id="message"
+  placeholder="気持ちを書いてみよう..."></textarea>
+
+<button onclick="sendTicket()">
+  チケットを発行する
+</button>
+
+<div class="small-note">
+24時間以内に返答できます
+</div>
 
 <div id="shareBox"></div>
 
 </div>
 
 <div id="overlay" class="overlay hidden">
-  <div class="big">PRINTING...</div>
+  <div class="big">
+    PRINTING...
+  </div>
 </div>
 
 <script>
 
-const GAS_URL = "https://script.google.com/macros/s/AKfycbyAucuaQ-jclQmju5wzjUSXbH2aJs_TTDgk-d02H40CBi2WvmLPE1tNK3kdJMwXFIsirQ/exec";
+const GAS_URL =
+"https://script.google.com/macros/s/AKfycbyAucuaQ-jclQmju5wzjUSXbH2aJs_TTDgk-d02H40CBi2WvmLPE1tNK3kdJMwXFIsirQ/exec";
 
-console.log("GAS_URL =", GAS_URL);
-  
 async function sendTicket() {
 
-  const sender = document.getElementById("sender").value.trim();
-  const message = document.getElementById("message").value.trim();
-  const receiver = document.getElementById("receiver").value.trim();
+  const sender =
+    document.getElementById("sender")
+    .value.trim();
+
+  const receiver =
+    document.getElementById("receiver")
+    .value.trim();
+
+  const message =
+    document.getElementById("message")
+    .value.trim();
 
   if (!sender || !receiver || !message) {
-    alert("名前とメッセージを入力してね");
+
+    alert("全部入力してね");
+
     return;
   }
 
-  // 🔥 ここが修正ポイント
-  const ticketId = Date.now().toString() + "-" + Math.random().toString(36).slice(2, 8);
+  const ticketId =
+    Date.now().toString()
+    + "-"
+    + Math.random()
+    .toString(36)
+    .slice(2,8);
 
   const data = {
-   ticketId,
-   sender,
-   receiver,
-   message,
-    status: "pending",
-    createdAt: new Date().toISOString()
+
+    ticketId,
+    sender,
+    receiver,
+    message,
+
+    status:"pending",
+
+    createdAt:
+      new Date().toISOString()
   };
 
-  const overlay = document.getElementById("overlay");
+  const overlay =
+    document.getElementById("overlay");
+
   overlay.classList.remove("hidden");
 
   try {
+
     const res = await fetch(GAS_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain"
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"text/plain"
       },
-      body: JSON.stringify(data)
+
+      body:JSON.stringify(data)
     });
 
     await res.text();
 
-  } catch (e) {
-    console.log("GAS error:", e);
+  } catch(e){
+
+    console.log(e);
+
+    alert("送信失敗");
   }
 
   overlay.classList.add("hidden");
 
-  const base = window.location.origin + window.location.pathname.replace("index.html", "");
-  const url = base + "ticket.html?id=" + ticketId;
+  const base =
+    window.location.origin
+    + window.location.pathname
+    .replace("index.html","");
+
+  const url =
+    base + "ticket.html?id="
+    + ticketId;
+
   const checkUrl =
-  base + "check.html?id=" + ticketId;
+    base + "check.html?id="
+    + ticketId;
 
-  document.getElementById("shareBox").innerHTML = `
-  <p>🎫 チケットID：${ticketId}</p>
+  document.getElementById("shareBox")
+  .innerHTML = `
 
-  <p>💌 告白URL</p>
-  <input id="shareUrl" value="${url}" readonly>
+    <div class="label">
+      💌 告白URL
+    </div>
 
-  <button onclick="copyUrl()">
-    告白URLコピー
-  </button>
+    <input
+      id="shareUrl"
+      value="${url}"
+      readonly>
 
-  <br><br>
+    <button onclick="copyUrl()">
+      告白URLをコピー
+    </button>
 
-  <p>📊 状態確認URL</p>
-  <input id="checkUrl" value="${checkUrl}" readonly>
+    <div class="label">
+      📊 ステータス確認URL
+    </div>
 
-  <button onclick="copyCheckUrl()">
-    状態確認URLコピー
-  </button>
-`;
+    <input
+      id="checkUrl"
+      value="${checkUrl}"
+      readonly>
 
+    <button onclick="copyCheckUrl()">
+      状態確認URLをコピー
+    </button>
+
+  `;
 }
 
 function copyUrl(){
-  const input = document.getElementById("shareUrl");
+
+  const input =
+    document.getElementById("shareUrl");
+
   input.select();
+
   document.execCommand("copy");
+
   alert("コピーしたよ");
 }
-  
+
 function copyCheckUrl(){
 
   const input =
@@ -188,6 +390,7 @@ function copyCheckUrl(){
 
   alert("状態確認URLをコピーしたよ");
 }
+
 </script>
 
 </body>
