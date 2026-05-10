@@ -336,35 +336,47 @@ async function sendTicket() {
     + ticketId;
 
   document.getElementById("shareBox")
-  .innerHTML = `
+.innerHTML = `
 
-    <div class="label">
-      💌 告白URL
-    </div>
+  <div class="label">
+    💌 告白URL
+  </div>
 
-    <input
-      id="shareUrl"
-      value="${url}"
-      readonly>
+  <input
+    id="shareUrl"
+    value="${url}"
+    readonly>
 
-    <button onclick="copyUrl()">
-      告白URLをコピー
+  <button onclick="copyUrl()">
+    告白URLをコピー
+  </button>
+
+  <a href="${url}" target="_blank">
+    <button>
+      告白ページを開く
     </button>
+  </a>
 
-    <div class="label">
-      📊 ステータス確認URL
-    </div>
+  <div class="label">
+    📊 ステータス確認URL
+  </div>
 
-    <input
-      id="checkUrl"
-      value="${checkUrl}"
-      readonly>
+  <input
+    id="checkUrl"
+    value="${checkUrl}"
+    readonly>
 
-    <button onclick="copyCheckUrl()">
-      状態確認URLをコピー
+  <button onclick="copyCheckUrl()">
+    状態確認URLをコピー
+  </button>
+
+  <a href="${checkUrl}" target="_blank">
+    <button>
+      状態確認ページを開く
     </button>
+  </a>
 
-  `;
+`;
 }
 
 function copyUrl(){
