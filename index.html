@@ -140,14 +140,28 @@ async function sendTicket() {
 
   const base = window.location.origin + window.location.pathname.replace("index.html", "");
   const url = base + "ticket.html?id=" + ticketId;
+  const checkUrl =
+  base + "check.html?id=" + ticketId;
 
   document.getElementById("shareBox").innerHTML = `
-    <p>🎫 チケットID：${ticketId}</p>
+  <p>🎫 チケットID：${ticketId}</p>
 
-    <p>🔗 共有URL</p>
-    <input id="shareUrl" value="${url}" readonly>
-    <button onclick="copyUrl()">コピー</button>
-  `;
+  <p>💌 告白URL</p>
+  <input id="shareUrl" value="${url}" readonly>
+
+  <button onclick="copyUrl()">
+    告白URLコピー
+  </button>
+
+  <br><br>
+
+  <p>📊 状態確認URL</p>
+  <input id="checkUrl" value="${checkUrl}" readonly>
+
+  <button onclick="copyCheckUrl()">
+    状態確認URLコピー
+  </button>
+`;
 
 }
 
@@ -157,7 +171,18 @@ function copyUrl(){
   document.execCommand("copy");
   alert("コピーしたよ");
 }
+  
+function copyCheckUrl(){
 
+  const input =
+    document.getElementById("checkUrl");
+
+  input.select();
+
+  document.execCommand("copy");
+
+  alert("状態確認URLをコピーしたよ");
+}
 </script>
 
 </body>
