@@ -228,6 +228,8 @@ async function acceptTicket() {
       status: "accepted"
     })
   });
+
+await loadTicket();
 }
 
 /* -----------------------
@@ -247,6 +249,8 @@ async function declineTicket() {
       status: "declined"
     })
   });
+
+await loadTicket();
 }
 
 /* -----------------------
