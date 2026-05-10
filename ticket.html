@@ -104,6 +104,55 @@ content="width=device-width, initial-scale=1.0">
     0% { transform: scale(0.6); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }
   }
+
+#hearts{
+
+  position:fixed;
+  inset:0;
+
+  pointer-events:none;
+
+  overflow:hidden;
+
+  z-index:9999;
+}
+
+.heart{
+
+  position:absolute;
+
+  bottom:-20px;
+
+  font-size:24px;
+
+  animation:
+    floatUp 3s linear forwards;
+}
+
+@keyframes floatUp{
+
+  0%{
+    transform:
+      translateY(0)
+      scale(0.8);
+
+    opacity:0;
+  }
+
+  10%{
+    opacity:1;
+  }
+
+  100%{
+
+    transform:
+      translateY(-110vh)
+      scale(1.4)
+      rotate(20deg);
+
+    opacity:0;
+  }
+}
 </style>
 </head>
 
@@ -222,6 +271,7 @@ updateTimer();
 async function acceptTicket() {
 
   showOverlay("ACCEPTED", "想いを受け取りました");
+  launchHearts();
 
   await fetch(GAS_URL, {
     method: "POST",
@@ -274,6 +324,39 @@ function showOverlay(title, subtitle) {
   }, 2000);
 }
 
+function launchHearts(){
+
+  const container =
+    document.getElementById("hearts");
+
+  for(let i=0;i<24;i++){
+
+    const heart =
+      document.createElement("div");
+
+    heart.className = "heart";
+
+    heart.innerText = "💖";
+
+    heart.style.left =
+      Math.random() * 100 + "vw";
+
+    heart.style.animationDelay =
+      Math.random() * 1.2 + "s";
+
+    heart.style.fontSize =
+      (20 + Math.random()*24) + "px";
+
+    container.appendChild(heart);
+
+    setTimeout(()=>{
+
+      heart.remove();
+
+    },4000);
+  }
+}
+
 /* -----------------------
    ボタン無効化
 ----------------------- */
@@ -310,6 +393,6 @@ function disableButtons(status){
 loadTicket();
 
 </script>
-
+<div id="hearts"></div>
 </body>
 </html>
