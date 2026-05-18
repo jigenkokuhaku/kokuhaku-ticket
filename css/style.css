@@ -1,0 +1,443 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: radial-gradient(circle at top, #1a1a2e, #000);
+  color: white;
+  line-height: 1.8;
+}
+
+body.center-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+a {
+  color: white;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Common links */
+
+.home-link {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  z-index: 1000;
+}
+
+.home-link:hover,
+.about-link:hover {
+  opacity: 1;
+}
+
+.about-link {
+  position: fixed;
+  right: 20px;
+  bottom: 18px;
+  color: white;
+  opacity: 0.7;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* Common panels */
+
+.ticket,
+.card,
+.hero-box,
+.section,
+.step,
+.faq,
+.concept-block {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 22px;
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.10);
+}
+
+.ticket {
+  width: 100%;
+  max-width: 420px;
+  padding: 30px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.card {
+  width: 360px;
+  padding: 28px;
+  text-align: center;
+}
+
+/* Typography */
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 42px;
+  letter-spacing: 2px;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 28px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 18px;
+  opacity: 0.85;
+}
+
+.message {
+  margin-top: 20px;
+  line-height: 1.7;
+  font-size: 18px;
+  white-space: pre-wrap;
+}
+
+.small,
+.small-text,
+.small-note,
+.mini {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.small-note {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.big-text,
+.big {
+  font-size: 38px;
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+
+/* Forms */
+
+.label {
+  margin-top: 14px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  outline: none;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+input:focus,
+textarea:focus {
+  border-color: rgba(0, 198, 255, 0.6);
+  box-shadow: 0 0 12px rgba(0, 198, 255, 0.25);
+}
+
+textarea {
+  min-height: 140px;
+  resize: none;
+}
+
+/* Buttons */
+
+button,
+.button {
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button {
+  padding: 14px 20px;
+  margin-top: 18px;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+}
+
+button:hover,
+.button:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.button {
+  display: inline-block;
+  padding: 14px 24px;
+  text-decoration: none;
+  background: #00c6ff;
+}
+
+.yes {
+  background: #a9d8a9;
+}
+
+.no {
+  background: #ddd;
+  color: #111;
+}
+
+.button-area {
+  margin-top: 26px;
+}
+
+/* Overlay / Popup */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup {
+  text-align: center;
+  animation: pop 0.5s ease;
+}
+
+/* Layout pages */
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  padding: 24px;
+}
+
+.hero {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-box {
+  width: 100%;
+  max-width: 720px;
+  padding: 40px 28px;
+}
+
+.section {
+  margin-top: 42px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.step,
+.faq {
+  margin-bottom: 20px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.step-title {
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.footer {
+  margin: 48px 0 20px;
+  text-align: center;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+/* About / creator */
+
+.creator {
+  text-align: center;
+}
+
+.creator-icon {
+  width: 120px;
+  height: 120px;
+  margin-top: 10px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+.creator-name {
+  margin-top: 16px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.concept-block {
+  margin-top: 32px;
+  padding: 22px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.concept-title {
+  margin-bottom: 14px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #9fe7ff;
+}
+
+/* Counter */
+
+.counter {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.counter-label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.counter-number {
+  font-size: 42px;
+  font-weight: bold;
+  color: #9fe7ff;
+}
+
+/* Status */
+
+.names {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.status {
+  margin-top: 28px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.pending {
+  color: #ffd966;
+}
+
+.accepted {
+  color: #8cffb2;
+}
+
+.declined {
+  color: #ff9b9b;
+}
+
+/* Hearts */
+
+#hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 24px;
+  animation: floatUp 3s linear forwards;
+}
+
+/* Animation */
+
+@keyframes pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.98);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 0.5;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-110vh) scale(1.4) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  .hero-box {
+    padding: 28px 20px;
+  }
+
+  .section {
+    padding: 22px;
+  }
+
+  .card {
+    width: 100%;
+  }
+}
