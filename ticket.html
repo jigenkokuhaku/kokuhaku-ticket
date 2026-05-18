@@ -108,7 +108,16 @@ async function loadTicket() {
 /* -----------------------
    24時間カウントダウン（そのまま）
 ----------------------- */
-const deadline = new Date().setTime(parseInt(ticketId.split("-")[0])) + 24 * 60 * 60 * 1000;
+const createdTime =
+  Number(ticketId.split("-")[0]);
+
+if (isNaN(createdTime)) {
+  console.error("Invalid ticket ID");
+}
+
+const deadline =
+  createdTime + (24 * 60 * 60 * 1000);
+
 
 function updateTimer() {
   const now = new Date().getTime();
