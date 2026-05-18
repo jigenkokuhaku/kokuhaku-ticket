@@ -25,105 +25,17 @@ content="width=device-width, initial-scale=1.0">
   
 <title>告白ステータス確認</title>
 
-<style>
-
-body{
-  margin:0;
-  font-family:sans-serif;
-  background:
-    radial-gradient(circle at top,#1a1a2e,#000);
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:white;
-}
-
-.card{
-  width:360px;
-  padding:28px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(10px);
-  text-align:center;
-  box-shadow:0 0 30px rgba(0,255,255,0.15);
-}
-
-h1{
-  margin-top:0;
-  font-size:24px;
-}
-
-.names{
-  margin-top:20px;
-  font-size:20px;
-  font-weight:bold;
-}
-
-.message{
-  margin-top:20px;
-  line-height:1.7;
-  font-size:18px;
-  white-space:pre-wrap;
-}
-
-.status{
-  margin-top:28px;
-  font-size:26px;
-  font-weight:bold;
-}
-
-.pending{
-  color:#ffd966;
-}
-
-.accepted{
-  color:#8cffb2;
-}
-
-.declined{
-  color:#ff9b9b;
-}
-
-.small{
-  margin-top:10px;
-  opacity:0.7;
-  font-size:13px;
-}
-.home-link{
-
-  position:fixed;
-
-  top:20px;
-  left:20px;
-
-  color:white;
-
-  text-decoration:none;
-
-  font-weight:bold;
-
-  letter-spacing:1px;
-
-  opacity:0.8;
-
-  z-index:1000;
-}
-
-.home-link:hover{
-
-  opacity:1;
-}
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="center-page">
+  
 <a href="index.html" class="home-link">
   💌次元告白チケット
 </a>
 <div class="card">
 
-  <h1>告白ステータス</h1>
+  <h2>告白ステータス</h2>
 
   <div class="names" id="names">
     読み込み中...
