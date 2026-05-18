@@ -143,6 +143,8 @@ updateTimer();
 ----------------------- */
 async function acceptTicket() {
 
+  disableButtons("accepted");
+
   showOverlay("ACCEPTED", "想いを受け取りました");
   launchHearts();
 
@@ -157,13 +159,15 @@ async function acceptTicket() {
     })
   });
 
-await loadTicket();
+  await loadTicket();
 }
 
 /* -----------------------
    辞退
 ----------------------- */
 async function declineTicket() {
+
+  disableButtons("declined");
 
   showOverlay("DECLINED", "この想いは保留されました");
 
@@ -178,7 +182,7 @@ async function declineTicket() {
     })
   });
 
-await loadTicket();
+  await loadTicket();
 }
 
 /* -----------------------
